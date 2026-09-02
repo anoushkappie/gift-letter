@@ -97,14 +97,15 @@
            IMAGE ON ENVELOPE
            ========================= */
 
+        /* INCREASED HEART SIZE */
         .heart {
             position: absolute;
 
-            top: 65px;
-            left: 125px;
+            top: 55px;
+            left: 115px;
 
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
 
             z-index: 4;
         }
@@ -169,39 +170,42 @@
 
 
         /* =========================
-           BACKGROUND ELEMENTS (OUTSIDE THE LETTER)
+           FIXED POSITIONS & SUBTLE HOVERS
            ========================= */
 
+        /* Fixed Plushie: Larger, fixed position near top-left of envelope */
         .bg-plushie {
-            position: absolute;
-            left: -120px;
-            bottom: 20px;
-            width: 120px;
+            position: fixed;
+            top: 120px;
+            left: calc(50% - 320px);
+            width: 150px;
             cursor: pointer;
             z-index: 10;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+            transition: transform 0.3s ease, filter 0.3s ease;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
+        /* Subtle Hover Effect */
         .bg-plushie:hover {
-            transform: scale(1.25) rotate(-10deg);
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+            transform: scale(1.05) rotate(-3deg);
+            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
         }
 
-        /* Person Photo Frame on the right side */
+        /* Fixed Photo Frame: Larger, fixed position near top-right of envelope */
         .bg-photo-frame {
-            position: absolute;
-            right: -130px;
-            top: 10px;
-            width: 130px;
-            height: 130px;
+            position: fixed;
+            top: 120px;
+            right: calc(50% - 320px);
+            width: 150px;
+            height: 150px;
             background: #ffffff;
             padding: 6px;
             border-radius: 8px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
             cursor: pointer;
             z-index: 10;
-            transition: transform 0.4s ease, filter 0.4s ease;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            box-sizing: border-box;
         }
 
         .bg-photo-frame img {
@@ -211,9 +215,10 @@
             border-radius: 4px;
         }
 
+        /* Subtle Hover Effect */
         .bg-photo-frame:hover {
-            transform: scale(1.2) rotate(8deg);
-            filter: brightness(1.08) drop-shadow(0 12px 20px rgba(0,0,0,0.3));
+            transform: scale(1.05) rotate(3deg);
+            filter: brightness(1.03) drop-shadow(0 8px 15px rgba(0,0,0,0.25));
         }
 
 
@@ -273,31 +278,24 @@
 
 <body>
 
-    <!-- Background Music -->
+    <img src="capy.png" alt="Capybara Plushie" class="bg-plushie">
+
+    <div class="bg-photo-frame">
+        <img src="me.jpg" alt="Photo of me">
+    </div>
+
     <audio id="bg-music" src="rawfear.mp3" loop></audio>
 
 
-    <!-- =========================
-         TITLE
-         ========================= -->
-
     <h1 class="title">
-        U got a letter my man, open it!! :D
+        HEYY!! YOU GOT A LETTER, OPEN IT :D
     </h1>
 
 
-    <!-- =========================
-         ENVELOPE
-         ========================= -->
-
     <div class="envelope" onclick="openLetter()">
-
-        <!-- Flap -->
 
         <div class="flap"></div>
 
-
-        <!-- Your sticker image -->
 
         <div class="heart">
             <img src="open.png" alt="Decoration">
@@ -306,30 +304,13 @@
     </div>
 
 
-    <!-- =========================
-         INSTRUCTION
-         ========================= -->
-
     <p class="instruction">
-        Click it ✨✨✨✨✨✨
+        Click it!!!!
     </p>
 
 
-    <!-- =========================
-         LETTER WRAPPER & ELEMENTS
-         ========================= -->
-
     <div class="letter-wrapper">
 
-        <!-- Outside Plushie (Capy) -->
-        <img src="capy.png" alt="Capybara Plushie" class="bg-plushie">
-
-        <!-- Outside Photo (Me) -->
-        <div class="bg-photo-frame">
-            <img src="me.jpg" alt="Photo of me">
-        </div>
-
-        <!-- The Main Letter -->
         <div class="letter" id="letter">
 
             <h1>Dear ______,</h1>
@@ -341,29 +322,25 @@
 
 
             <p>
-                It is a good day that comes once a year blah blah luv u granparent.
+                Hi, so uh Happy Birthday. I made this for u and also to avoid studying. 
             </p>
-
+            <p>
+                You've been an amazing friend and I love how you're doing so good in my courses. Keep it up! You will soon be the meanest meanie the world has ever seen. Trust.
+            </p>
 
             <p>
-                I hope this little surprise made you smile :) :P
+                I hope you have a great birthday and rest because growing old is tiring. I hope you like this. Next year I'll make something even better pakka. ENJOYYYAAYY
             </p>
 
 
-            <!-- Signature -->
-
             <p class="signature">
-                — From gui ♡
+                — Luv, Anoushka lol :P ♡
             </p>
 
         </div>
 
     </div>
 
-
-    <!-- =========================
-         JAVASCRIPT
-         ========================= -->
 
     <script>
 
