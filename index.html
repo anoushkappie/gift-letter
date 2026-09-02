@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A Little Gift</title>
+
+    <style>
+
+        /* =========================
+           BACKGROUND
+           ========================= */
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background-image: url("background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+
+            padding-top: 80px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+
+        /* =========================
+           TITLE
+           ========================= */
+
+        .title {
+            color: #000000;
+            margin-bottom: 35px;
+        }
+
+
+        /* =========================
+           ENVELOPE
+           ========================= */
+
+        .envelope {
+            width: 300px;
+            height: 190px;
+
+            background: #b0c4de;
+
+            margin: auto;
+
+            position: relative;
+
+            cursor: pointer;
+
+            border-radius: 5px;
+
+            perspective: 800px;
+
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+
+        /* =========================
+           ENVELOPE FLAP
+           ========================= */
+
+        .flap {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 0;
+            height: 0;
+
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #9cb8d8;
+
+            transform-origin: top center;
+
+            transition: transform 0.8s ease;
+
+            z-index: 3;
+        }
+
+
+        /* Flap opens when envelope is clicked */
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+
+        /* =========================
+           IMAGE ON ENVELOPE
+           ========================= */
+
+        .heart {
+            position: absolute;
+
+            top: 65px;
+            left: 125px;
+
+            width: 60px;
+            height: 60px;
+
+            z-index: 4;
+        }
+
+        .heart img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+
+        /* =========================
+           LETTER CONTAINER
+           ========================= */
+
+        .letter-wrapper {
+            position: relative;
+            width: 420px;
+            margin: 35px auto 50px;
+        }
+
+        .letter {
+            background: #fffaf0;
+
+            width: 100%;
+
+            min-height: 280px;
+
+            padding: 35px;
+
+            box-sizing: border-box;
+
+            border-radius: 5px;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+
+            text-align: left;
+
+            /* Hidden before envelope opens */
+            opacity: 0;
+
+            transform: translateY(-40px);
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+
+        /* Letter appears after opening */
+
+        .letter.show {
+            opacity: 1;
+
+            transform: translateY(0);
+
+            pointer-events: auto;
+        }
+
+
+        /* =========================
+           BACKGROUND ELEMENTS (OUTSIDE THE LETTER)
+           ========================= */
+
+        .bg-plushie {
+            position: absolute;
+            left: -120px;
+            bottom: 20px;
+            width: 120px;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .bg-plushie:hover {
+            transform: scale(1.25) rotate(-10deg);
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
+
+        /* Person Photo Frame on the right side */
+        .bg-photo-frame {
+            position: absolute;
+            right: -130px;
+            top: 10px;
+            width: 130px;
+            height: 130px;
+            background: #ffffff;
+            padding: 6px;
+            border-radius: 8px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .bg-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .bg-photo-frame:hover {
+            transform: scale(1.2) rotate(8deg);
+            filter: brightness(1.08) drop-shadow(0 12px 20px rgba(0,0,0,0.3));
+        }
+
+
+        /* =========================
+           LETTER TITLE & TEXT
+           ========================= */
+
+        .letter h1 {
+            color: #000000;
+
+            text-align: center;
+
+            margin-top: 0;
+
+            margin-bottom: 25px;
+        }
+
+        .letter p {
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            color: #000000;
+        }
+
+
+        /* =========================
+           SIGNATURE
+           ========================= */
+
+        .signature {
+            text-align: right;
+
+            margin-top: 35px;
+
+            font-style: italic;
+
+            font-size: 18px !important;
+        }
+
+
+        /* =========================
+           SMALL INSTRUCTION
+           ========================= */
+
+        .instruction {
+            color: #000000;
+
+            margin-top: 25px;
+
+            font-size: 25px;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Background Music -->
+    <audio id="bg-music" src="rawfear.mp3" loop></audio>
+
+
+    <!-- =========================
+         TITLE
+         ========================= -->
+
+    <h1 class="title">
+        U got a letter my man, open it!! :D
+    </h1>
+
+
+    <!-- =========================
+         ENVELOPE
+         ========================= -->
+
+    <div class="envelope" onclick="openLetter()">
+
+        <!-- Flap -->
+
+        <div class="flap"></div>
+
+
+        <!-- Your sticker image -->
+
+        <div class="heart">
+            <img src="open.png" alt="Decoration">
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         INSTRUCTION
+         ========================= -->
+
+    <p class="instruction">
+        Click it ✨✨✨✨✨✨
+    </p>
+
+
+    <!-- =========================
+         LETTER WRAPPER & ELEMENTS
+         ========================= -->
+
+    <div class="letter-wrapper">
+
+        <!-- Outside Plushie (Capy) -->
+        <img src="capy.png" alt="Capybara Plushie" class="bg-plushie">
+
+        <!-- Outside Photo (Me) -->
+        <div class="bg-photo-frame">
+            <img src="me.jpg" alt="Photo of me">
+        </div>
+
+        <!-- The Main Letter -->
+        <div class="letter" id="letter">
+
+            <h1>Dear ______,</h1>
+
+
+            <p>
+                HAPPYYY BIRTHDAYYYYY
+            </p>
+
+
+            <p>
+                It is a good day that comes once a year blah blah luv u granparent.
+            </p>
+
+
+            <p>
+                I hope this little surprise made you smile :) :P
+            </p>
+
+
+            <!-- Signature -->
+
+            <p class="signature">
+                — From gui ♡
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+         ========================= -->
+
+    <script>
+
+        function openLetter() {
+
+            /* Play audio */
+            const audio = document.getElementById("bg-music");
+            if (audio) {
+                audio.play();
+            }
+
+            /* Open the envelope */
+
+            document
+                .querySelector(".envelope")
+                .classList.add("open");
+
+
+            /* Wait for the flap animation */
+
+            setTimeout(function() {
+
+                document
+                    .getElementById("letter")
+                    .classList.add("show");
+
+            }, 600);
+
+        }
+
+    </script>
+
+</body>
+</html>
